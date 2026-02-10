@@ -1,20 +1,19 @@
-# 🤖 Robótica — Proyectos (Python)
+# Robotics01
 
-Repositorio de proyectos y prácticas de la materia de **Robótica**.  
-Todo el desarrollo y la programación de los proyectos en este repositorio se realiza **exclusivamente en Python**.
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Robotics](https://img.shields.io/badge/Robotics-0B3D91?style=for-the-badge&logo=robotframework&logoColor=white)
 
----
+## Introducción
+**Robotics01** es un repositorio enfocado en códigos y ejercicios de **robótica** relacionados con **cinemática directa**, **cinemática inversa** y **dinámica**.  
+Los desarrollos están basados principalmente en:
+- **Robotics Toolbox for Python** de **Peter Corke**
+- **RoboDK API** para integración y simulación
 
-## 📌 Objetivo del repositorio
-- Centralizar todos mis proyectos de la clase en un solo lugar.
-- Mantener evidencia de avances (código, videos, fotos, reportes).
-- Documentar aprendizaje, decisiones de diseño y mejoras futuras.
-- Practicar buenas prácticas de desarrollo en Python (estructura, entorno, dependencias y documentación).
+El código se manejará **principalmente en Python** y se documentará por prácticas/proyectos conforme avance el curso.
 
----
+## Imagen
+![Panda Robot GIF](https://github.com/petercorke/robotics-toolbox-python/raw/master/docs/figs/panda1.gif)
 
-## 🗂️ Estructura del repositorio
-Cada proyecto vive en su propia carpeta:
 
 
 
