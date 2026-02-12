@@ -1,34 +1,16 @@
-# Juego "Impostor" (variante Spy) - cada jugador revisa su carta en privado
-import os, random, sys
+import roboticstoolbox as rtb
+import numpy as np
 
-PALABRAS = ["manzana","libro","reloj","perro","avión","teléfono","gato","fútbol","playa","árbol"]
+print(f"Version de roboticstoolbok¿ {rtb.__version__}")
+print(f"Version de numpy¿ {np.__version__}")
 
-def clear():
-    os.system('cls' if os.name == 'nt' else 'clear')
+robot = rtb.models.DH.Puma560()
 
-def main():
-    try:
-        n = int(input("Número de jugadores (mínimo 3): ").strip())
-        if n < 3:
-            print("Se necesitan al menos 3 jugadores."); return
-    except:
-        print("Entrada inválida."); return
+#Variables articulares
+q =([0, np.deg2rad(30), -np.deg2rad(160), 0, 0, 0])
 
-    palabra = random.choice(PALABRAS)
-    impostor = random.randrange(n)
+# Visualizar
 
-    print("\nSe va a repartir. Pasa el dispositivo a cada jugador y sigue las instrucciones.\n")
-    for i in range(n):
-        input(f"Jugador {i+1}: pulsa Enter para ver tu carta...")
-        clear()
-        if i == impostor:
-            print("=== ERES IMPOSTOR ===\n(No recibes la palabra; finge saberla.)")
-        else:
-            print(f"Palabra: {palabra}")
-        input("\nPulsa Enter cuando termines y pasa el dispositivo al siguiente jugador...")
-        clear()
-
-    print("Reparto terminado. Empieza la discusión para encontrar al impostor. ¡Buena suerte!")
-
-if __name__ == "__main__":
-    main()
+robot.plot(q, block=True, backend='pyplot')
+#Si se downgradeo matplotlib 3.83
+robot.teach(q)
