@@ -7,10 +7,10 @@ print(f"Version de numpy¿ {np.__version__}")
 robot = rtb.models.DH.Puma560()
 
 #Variables articulares
-q =([0, np.deg2rad(30), -np.deg2rad(160), 0, 0, 0])
+q = ([0, np.deg2rad(30), -np.deg2rad(160), 0, 0, 0])
 
 # Visualizar
 
 robot.plot(q, block=True, backend='pyplot')
 #Si se downgradeo matplotlib 3.83
-robot.teach(q)
+robot.teach(robot.q)
