@@ -31,10 +31,18 @@ plt.show() """
 T0 = transl2(0,0) #Referencia
 trplot2(T0, frame='0', color='k')
 
-#Traslación de 2,2 seguida de
-TA = transl2(1,2)
+#Traslación de 1,2 seguida de rotación 30 grados
+TA = transl2(1,2) @ trot2(30, "deg")
 print(TA)
-trplot2(TA, frame='A', color='b')   
+trplot2(TA, frame='A', color='b')  
+
+P = np.array([4,3])
+plot_point(P,"ko",text="P") #Punto a transformar
+
+#Rotación de 30 grados seguida de traslación de 1,2
+TB = trot2(30, "deg") @ transl2(1,2)    
+print(TB)
+trplot2(TB, frame='B', color='r')
 
 plt.axis('equal')
 plt.grid(True)
@@ -42,3 +50,4 @@ plt.xlabel('X')
 plt.ylabel('Y')
 plt.title('Transformación 2D')
 plt.show()
+
