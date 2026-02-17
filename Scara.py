@@ -28,8 +28,12 @@ origin_TCBA = TCBA [:2, 2]
 P = np.array([origin_TCBA[0], origin_TCBA[1]])
 plot_point(P,"ko",text="P")
 print("Coordenadas en T0: {:.4f}, {:.4f}".format(P[0], P[1]))
-print("Coordenadas en TBA: {:.4f}, {:.4f}".format(origin_TBA[0], origin_TBA[1]))
-print("Coordenadas en TCBA: {:.4f}, {:.4f}".format(origin_TCBA[0], origin_TCBA[1]))
+
+P_TA = homtrans(np.linalg.inv(TA), P)
+print("Coordenadas en TBA: {:.4f}, {:.4f}".format(P_TA[0, 0], P_TA[1, 0]))
+
+P_TBA = homtrans(np.linalg.inv(TBA), P)
+print("Coordenadas en TCBA: {:.4f}, {:.4f}".format(P_TBA[0, 0], P_TBA[1, 0]))
 
 plt.axis('equal')
 plt.grid(True)
