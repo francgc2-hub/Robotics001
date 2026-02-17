@@ -37,12 +37,16 @@ print(TA)
 trplot2(TA, frame='A', color='b')  
 
 P = np.array([4,3])
-plot_point(P,"ko",text="P") #Punto a transformar
+plot_point(P,"ko",text="P") 
+print(P)
+
+P1 = homtrans(np.linalg.inv(TA),P)
+print(P1) #Transformamos el punto P con la transformación TA
 
 #Rotación de 30 grados seguida de traslación de 1,2
-TB = trot2(30, "deg") @ transl2(1,2)    
+"""TB = trot2(30, "deg") @ transl2(1,2)    
 print(TB)
-trplot2(TB, frame='B', color='r')
+trplot2(TB, frame='B', color='r')"""
 
 plt.axis('equal')
 plt.grid(True)
