@@ -31,3 +31,5 @@ print("Postmult. de P respecto a TA:", Pos_TA)
 
 # Mostrar la trama
 plt.show()
+
+# R = eul2r(a,b,c) o tr2eul(R)
