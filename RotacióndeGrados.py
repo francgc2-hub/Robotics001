@@ -13,10 +13,14 @@ Rx = rotx(90, unit="deg")
 print(Rx)
 print('\n')
 
-Ry = roty(90, unit="deg")
+"""Ry = roty(90, unit="deg")
 print(Ry)
 print('\n')
 
 Rz = rotz(90, unit="deg")
 print(Rz)
-print('\n')
+print('\n')"""
+
+trplot(Rx)
+tranimate(Rx)
+plt.show()
