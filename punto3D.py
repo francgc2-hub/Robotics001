@@ -25,5 +25,9 @@ ax.scatter(P[0], P[1], P[2], color='r', label='P')
 # Configurar plot
 plt.gca().view_init(elev=25, azim=44) # Perspectiva
 
+print("P en T0 es:", P)
+Pos_TA = P @ TA
+print("Postmult. de P respecto a TA:", Pos_TA)
+
 # Mostrar la trama
 plt.show()
