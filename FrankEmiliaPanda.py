@@ -41,7 +41,7 @@ T01 = T01.subs({theta: theta_1})
 T12 = T.subs({d: 0, a: 0.370, alpha: 0})  # theta2 - sp.pi/2 (si aplica, ponlo en theta)
 T12 = T12.subs({theta: theta_2})
 
-sp.pprint(T12)
+#sp.pprint(T12)
 
 T23 = T.subs({d: 0, a: 0.050, alpha: -sp.pi/2})
 T23 = T23.subs({theta: theta_3})
@@ -86,3 +86,4 @@ T06_solved = T06_s.subs({
 })
 
 sp.pprint(T06_solved)
+
