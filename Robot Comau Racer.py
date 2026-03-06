@@ -87,3 +87,48 @@ T06_solved = T06_s.subs({
 
 sp.pprint(T06_solved)
 
+# Crear figura una sola vez
+fig = plt.figure(figsize=(10, 8))
+ax = fig.add_subplot(111, projection='3d')
+
+T01_n = np.array(T01.subs({theta_1: joint1})).astype(np.float64)
+T02_n = T01_n @ np.array(T12.subs({theta_2: joint2})).astype(np.float64)
+T03_n = T02_n @ np.array(T23.subs({theta_3: joint3})).astype(np.float64)
+T04_n = T03_n @ np.array(T34.subs({theta_4: joint4})).astype(np.float64)
+T05_n = T04_n @ np.array(T45.subs({theta_5: joint5})).astype(np.float64)
+T06_n = T05_n @ np.array(T56.subs({theta_6: joint6})).astype(np.float64)
+T06_final = np.array(T06_solved).astype(np.float64)
+
+# Crear matriz 4x4 para T0
+T0_4x4 = np.eye(4)
+T0_4x4[:3, :3] = np.array(rotz(0, unit='deg')).astype(np.float64)
+
+frames = [
+    (T0_4x4, 'k', '0'),
+    (T01_n, 'b', '1'),
+    (T02_n, 'r', '2'),
+    (T03_n, 'g', '3'),
+    (T04_n, 'm', '4'),
+    (T05_n, 'y', '5'),
+    (T06_n, 'c', '6'),
+    (T06_final, 'purple', 'f'),
+]
+
+for frame, color, label in frames:
+    frame = np.array(frame).astype(np.float64)
+    # Dibujar origen
+    ax.scatter(*frame[:3, 3], color=color, s=50)
+    # Dibujar ejes
+    for i in range(3):
+        end = frame[:3, 3] + frame[:3, i] * 0.2
+        ax.plot([frame[0, 3], end[0]], [frame[1, 3], end[1]], [frame[2, 3], end[2]], color=color, linewidth=1)
+    # Etiqueta
+    ax.text(frame[0, 3], frame[1, 3], frame[2, 3], label, fontsize=10, color=color)
+
+ax.grid(True)
+ax.set_title('ABB 140-6')
+ax.set_xlabel('X')
+ax.set_ylabel('Y')
+ax.set_zlabel('Z')
+ax.set_box_aspect([1,1,1])
+plt.show()
