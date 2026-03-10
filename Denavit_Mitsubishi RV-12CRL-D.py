@@ -33,22 +33,22 @@ theta_1, theta_2, theta_3, theta_4, theta_5, theta_6 = sp.symbols(
 )
 
 # De la tabla DH
-T01 = T.subs({d: 0.365, a: 0.050, alpha: -sp.pi/2})
+T01 = T.subs({d: 0.450, a: 0.130, alpha: -sp.pi/2})
 T01 = T01.subs({theta: theta_1})
 
 #sp.pprint(T01)
 
-T12 = T.subs({d: 0, a: 0.370, alpha: 0})  # theta2 - sp.pi/2 (si aplica, ponlo en theta)
+T12 = T.subs({d: 0, a: 0.600, alpha: 0})  # theta2 - sp.pi/2 (si aplica, ponlo en theta)
 T12 = T12.subs({theta: theta_2})
 
 #sp.pprint(T12)
 
-T23 = T.subs({d: 0, a: 0.050, alpha: -sp.pi/2})
+T23 = T.subs({d: 0, a: 0.150, alpha: -sp.pi/2})
 T23 = T23.subs({theta: theta_3})
 
 #sp.pprint(T23)
 
-T34 = T.subs({d: 0.38594, a: 0, alpha: sp.pi/2})  
+T34 = T.subs({d: 0.760, a: 0, alpha: sp.pi/2})  
 T34 = T34.subs({theta: theta_4})
 
 #sp.pprint(T34)
@@ -58,7 +58,7 @@ T45 = T45.subs({theta: theta_5})
 
 #sp.pprint(T45)  
 
-T56 = T.subs({d: 0.080, a: 0, alpha: 0}) # theta6 - sp.pi/2 (si aplica, ponlo en theta)
+T56 = T.subs({d: 0.100, a: 0, alpha: 0}) # theta6 - sp.pi/2 (si aplica, ponlo en theta)
 T56 = T56.subs({theta: theta_6})    
 
 #sp.pprint(T56)
@@ -84,8 +84,11 @@ T06_solved = T06_s.subs({
     theta_5: joint5,
     theta_6: joint6,
 })
-
+sp.pprint(" ")
+sp.pprint(" ")
 sp.pprint(T06_solved)
+sp.pprint(" ")
+sp.pprint(" ")
 
 # Crear figura una sola vez
 fig = plt.figure(figsize=(10, 8))
@@ -126,7 +129,7 @@ for frame, color, label in frames:
     ax.text(frame[0, 3], frame[1, 3], frame[2, 3], label, fontsize=10, color=color)
 
 ax.grid(True)
-ax.set_title('Comau Racer 6-1.85')
+ax.set_title('Mitsubishi RV-12CRL-D')
 ax.set_xlabel('X')
 ax.set_ylabel('Y')
 ax.set_zlabel('Z')
