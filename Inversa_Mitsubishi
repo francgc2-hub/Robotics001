@@ -1,0 +1,130 @@
+import sympy as sp
+from sympy.matrices import rot_axis3
+# Para el ejemplo donde generamos la matriz DH
+from spatialmath import *
+from spatialmath.base import *
+# Para poder Graficar
+import matplotlib.pyplot as plt
+import numpy as np
+#Para usar el DH
+
+import roboticstoolbox as rtb
+L1=0.130 #Son los valores de a
+L2=0.600
+L3=0.150
+L4=0
+L5=0
+L6=0
+
+
+robot= rtb.DHRobot(
+[
+rtb.RevoluteDH(d=0.450, a=L1, alpha= -sp.pi/2, qlim=[-2.967, 2.967]),
+rtb.RevoluteDH(d=0, a=L2, alpha=0, qlim=[-1.5708, 2.62]),
+rtb.RevoluteDH(d=0, a=L3, alpha= -sp.pi/2, qlim=[0, 2.967]),
+rtb.RevoluteDH(d=0.760, a=L4, alpha=sp.pi/2, qlim=[-3.316, 3.316]), 
+rtb.RevoluteDH(d=0, a=L5, alpha= -sp.pi/2, qlim=[-2.0944, 2.0944]), 
+rtb.RevoluteDH(d=0.100, a=L6, alpha=0, qlim=[-6.283, 6.283]),
+], name="2Links", base=SE3(0,0,0), tool=SE3())
+
+print(robot)
+#tool=SE3() # Pose de efector final cero
+#Validamos con la directa el DH
+#Para modificar los angulos comodamente
+joint1 = 1.746 #En grados
+joint2 = -8.13
+joint3 = 142.28
+joint4 = 0
+joint5 = 45.85
+joint6 = 336.746
+
+T=robot.fkine([np.deg2rad(joint1), np.deg2rad(joint2), np.deg2rad(joint3), np.deg2rad(joint4), np.deg2rad(joint5), np.deg2rad(joint6)], tool=None)
+print(T)
+Tn = np.array(T).astype(np.float64) #Convertir a numpy
+robot.plot(q=[np.deg2rad(joint1), np.deg2rad(joint2), np.deg2rad(joint3), np.deg2rad(joint4), np.deg2rad(joint5), np.deg2rad(joint6)], limits=[-0.8,0.8,-0.8,0.8,-
+0.1,0.2], backend='pyplot', shadow=True, jointaxes=True, block=True)
+print(f"Los ángulos en la Cdirecta son ({joint1:.2f},{joint2:.2f},{joint3:.2f},{joint4:.2f},{joint5:.2f},{joint6:.2f})")
+print(f"La coordenada es ({Tn[0, 3]:.3f},{Tn[1, 3]:.3f},{Tn[2, 3]:.3f}), que pasamos a la inversa...")
+t = T.t
+print(t)
+
+q = SE3([round(t[0],4), round(t[1],4), 0])
+# print(q)
+
+# Cinemática inversa
+we = [1, 1, 1, 0, 0, 0]
+
+sol = robot.ikine_LM(
+    Tep=q,
+    q0 = np.deg2rad([joint1, joint2, joint3, joint4, joint5, joint6]), #q0=[0, 0, 0, 0, 0, 0],
+    ilimit=5000,
+    slimit=1000,
+    tol=0.000005,
+    joint_limits=True,
+    mask=we
+)
+
+print(sol)
+
+# Mostrar resultado
+if sol.success:
+    # Extraemos los 6 ángulos del resultado
+    theta1 = np.rad2deg(sol.q[0])
+    theta2 = np.rad2deg(sol.q[1])
+    theta3 = np.rad2deg(sol.q[2])
+    theta4 = np.rad2deg(sol.q[3])
+    theta5 = np.rad2deg(sol.q[4])
+    theta6 = np.rad2deg(sol.q[5])
+
+    print(f"Las variables articulares son:")
+    print(f"q1 = {theta1:.3f}°")
+    print(f"q2 = {theta2:.3f}°")
+    print(f"q3 = {theta3:.3f}°")
+    print(f"q4 = {theta4:.3f}°")
+    print(f"q5 = {theta5:.3f}°")
+    print(f"q6 = {theta6:.3f}°")
+
+    # Graficar solución
+    robot.plot(
+        q=sol.q,
+        limits=[],
+        backend='pyplot',
+        shadow=True,
+        jointaxes=True,
+        block=True
+    )
+
+    # Verificamos con la directa
+    T2 = robot.fkine(sol.q)
+    Tn2 = np.array(T2).astype(np.float64)
+
+    print(f"La coordenada es ({Tn2[0,3]:.3f}, {Tn2[1,3]:.3f}, {Tn2[2,3]:.3f}), con los nuevos ángulos")
+
+else:
+    print(f'No se pudo obtener solución {sol.success}')
+
+print("Y")
+
+"""q = SE3([round(t[0],4), round(t[1],4), 0])
+# print(q)
+#Cinemática inversa
+we=[1, 1, 1, 0, 0, 0]
+sol = robot.ikine_LM(Tep=q, q0=[0,0], ilimit=5000, slimit=1000, tol=0.000005,
+joint_limits=True, mask=we)
+print(sol)
+# #Mostrar resultado
+if sol.success:
+    # #Extraemos los ángulos del resultado
+    theta1=np.rad2deg(sol.q[0])
+    theta2=np.rad2deg(sol.q[1])
+    print(f"Las variables articulares son ({theta1:.3f}, {theta2:.3f})")
+    # Crea una nueva figura
+    robot.plot(q=sol.q, limits=[-0.8,0.8,-0.8,0.8,-0.1,0.2], backend='pyplot',
+    shadow=True, jointaxes=True, block=True)
+    #Si los volvemos a pasar...
+    T2=robot.fkine(sol.q)
+    Tn2 = np.array(T2).astype(np.float64) #Convertir a numpy
+    print(f"La coordenada es ({Tn2[0, 3]:.3f},{Tn2[1, 3]:.3f}), con los nuevos angulos")
+    # print(T)
+else:
+    print(f'No se pudo obtener solución {sol.success}')"""
